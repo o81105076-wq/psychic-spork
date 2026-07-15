@@ -390,7 +390,7 @@
     padding: 20px;
   }
 
-  /* Спеціальний фон для перехоплювача Instagram (щоб не було видно контент) */
+  /* Спеціальний фон для перехоплювача браузерів (щоб не було видно контент) */
   .modal-overlay.solid-bg {
     background: var(--bg);
     z-index: 100000;
@@ -574,15 +574,20 @@
 </div>
 
 <!-- ===================================================================== -->
-<!-- IN-APP BROWSER OVERLAY (Екран для Instagram/Threads) -->
+<!-- IN-APP BROWSER OVERLAY (Екран для Telegram/Instagram/Threads) -->
 <!-- ===================================================================== -->
 <div id="in-app-overlay" class="modal-overlay solid-bg">
+  <!-- Стрілочка вказує в кут екрана -->
   <svg class="in-app-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
     <line x1="7" y1="17" x2="17" y2="7"></line>
     <polyline points="7 7 17 7 17 17"></polyline>
   </svg>
+  
   <h2 class="modal-title" style="font-size: 24px;">Open in Browser</h2>
-  <p class="modal-subtitle">Instagram and Threads block access to this content.<br><br>Tap the <strong>(...) menu</strong> in the top right corner and select <strong>"Open in system browser"</strong>.</p>
+  <p class="modal-subtitle">
+    To view this content properly and access all features, please open this page in your system browser (Safari/Chrome).<br><br>
+    Tap the <strong>menu (...)</strong> or Safari icon and select <strong>"Open in browser"</strong>.
+  </p>
   
   <div class="modal-buttons" style="max-width: 250px;">
     <button id="copy-link-btn" class="modal-btn btn-no" style="width: 100%;">🔗 Copy Website Link</button>
@@ -621,13 +626,23 @@
   };
 
   // -----------------------------------------------------------
-  // 1. ПЕРЕВІРКА НА ВБУДОВАНИЙ БРАУЗЕР (Instagram/Threads/TikTok)
+  // 1. ПЕРЕВІРКА НА ВБУДОВАНИЙ БРАУЗЕР (Instagram / Threads / Telegram / TikTok)
   // -----------------------------------------------------------
   const ua = navigator.userAgent || navigator.vendor || window.opera;
-  const isInApp = (ua.indexOf('Instagram') > -1 || ua.indexOf('Barcelona') > -1 || ua.indexOf('Threads') > -1 || ua.indexOf('FBAN') > -1 || ua.indexOf('FBAV') > -1 || ua.indexOf('TikTok') > -1);
+  
+  // Додали 'Telegram' до списку перевірки
+  const isInApp = (
+    ua.indexOf('Instagram') > -1 || 
+    ua.indexOf('Barcelona') > -1 || 
+    ua.indexOf('Threads') > -1 || 
+    ua.indexOf('FBAN') > -1 || 
+    ua.indexOf('FBAV') > -1 || 
+    ua.indexOf('TikTok') > -1 || 
+    ua.indexOf('Telegram') > -1
+  );
   
   if (isInApp) {
-    // Якщо відкрили через інсту, показуємо екран перехоплення
+    // Якщо відкрили через месенджер/соцмережу, показуємо екран перехоплення
     document.getElementById('in-app-overlay').classList.add('active');
   }
 
