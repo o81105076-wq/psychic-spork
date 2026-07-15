@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#120B12">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https: file:; script-src 'self' 'unsafe-inline';">
+<title>Lana D'Loré</title>
+
+<!-- ===================================================================== -->
+<!-- ⚙️ ПАНЕЛЬ ШВИДКИХ НАЛАШТУВАНЬ (ЗМІНЮЙ ДАНІ ТІЛЬКИ В ЦЬОМУ БЛОЦІ) ⚙️ -->
+<!-- ===================================================================== -->
+<script>
+  const CONFIG = {
+    // 1. ПРОФІЛЬ (Текст та картинки)
+    avatarFile: "logo_icon.jpg",  // Назва файлу твоєї аватарки
+    nickname: "Lana D'Loré",      // Твій головний нікнейм
+    tagline: "❤️ Ready to be one of my Kings? 👑", // Підпис під ніком
+    
+    // СТАТУС ОНЛАЙН (true - увімкнено, false - вимкнено)
+    isOnline: false, 
+
+    // 2. ГОЛОВНІ КНОПКИ (Вставляй свої посилання між лапками)
+    onlyfansLink: "https://onlyfans.com/твоє_посилання", 
+    telegramLink: "https://t.me/твій_канал",             
+
+    // 3. НИЖНІ ПОСИЛАННЯ (Instagram, Threads)
+    instagramLink: "https://www.instagram.com/lana_dlore/",
+    threadsLink: "https://www.threads.net/@lana_dlore"
+  };
+</script>
+<!-- ===================================================================== -->
+<!-- КІНЕЦЬ НАЛАШТУВАНЬ (ДАЛІ КОД НЕ ЧІПАЙ)                                -->
+<!-- ===================================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #120B12;
+    --card: #1C121C;
+    --card-border: #34222F;
+    --ink: #FBF3F6;
+    --ink-soft: #B79AAC;
+    --accent: #FFFFFF;
+    --accent-deep: #F6C9DC;
+    --rose: #FF8FC0;
+    --online: #24d366; 
+    --transition: all 0.22s ease;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html, body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    height: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+    -webkit-touch-callout: none; 
+    touch-action: manipulation;
+  }
+
+  body{
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px calc(40px + env(safe-area-inset-bottom));
+    position: relative;
+    overflow-x: hidden;
+    background:
+      radial-gradient(60% 30% at 50% 18%, rgba(255,255,255,0.10), transparent 68%),
+      radial-gradient(65% 36% at 50% 88%, rgba(255,143,192,0.09), transparent 72%),
+      var(--bg);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes alive-shake {
+    0%, 100% { transform: translateZ(0) scale(1) translateX(0) rotate(0); }
+    20% { transform: translateZ(0) scale(1.03) translateX(-3px) rotate(-1deg); box-shadow: 0 8px 18px -4px rgba(0,0,0,0.4), 0 14px 24px rgba(209,90,143,0.35); }
+    40% { transform: translateZ(0) scale(1.03) translateX(3px) rotate(1deg); }
+    60% { transform: translateZ(0) scale(1.03) translateX(-3px) rotate(-1deg); }
+    80% { transform: translateZ(0) scale(1.03) translateX(3px) rotate(1deg); }
+  }
+
+  /* М'яка пульсація для кнопки YES */
+  @keyframes btn-pulse-soft {
+    0%, 100% { 
+      transform: scale(1); 
+      box-shadow: 0 4px 14px -6px rgba(0,0,0,0.4), 0 10px 20px rgba(209,90,143,0.2); 
+    }
+    50% { 
+      transform: scale(1.04); 
+      box-shadow: 0 8px 20px -4px rgba(0,0,0,0.4), 0 15px 30px rgba(209,90,143,0.4); 
+    }
+  }
+
+  @keyframes badge-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); box-shadow: 0 4px 12px rgba(255, 59, 48, 0.6); }
+  }
+
+  @keyframes online-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(36, 211, 102, 0.5); }
+    70% { box-shadow: 0 0 0 10px rgba(36, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(36, 211, 102, 0); }
+  }
+
+  .page{
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeUp 0.9s ease both;
+    will-change: transform, opacity;
+  }
+
+  .card{
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 28px;
+    padding: 40px 28px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 8px 24px -12px rgba(0,0,0,0.45), 0 40px 90px -40px rgba(0,0,0,0.65), 0 0 80px rgba(255,255,255,0.025);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .avatar-outer{
+    position: relative;
+    width: 108px;
+    height: 108px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .avatar-outer::before{
+    content: "";
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.55) 0%, rgba(255,220,235,0.32) 30%, rgba(255,143,192,0.16) 55%, rgba(255,143,192,0) 78%);
+    filter: blur(12px);
+    animation: pulse-glow 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes pulse-glow{
+    0%, 100%{ opacity: 0.75; transform: scale(1); }
+    50%{ opacity: 1; transform: scale(1.05); }
+  }
+
+  .avatar-wrap{
+    position: relative;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: linear-gradient(160deg, #2A1C26 0%, #150E14 100%);
+    border: 2px solid rgba(255,255,255,0.55);
+    box-shadow: 0 0 0 5px var(--card), 0 0 20px rgba(255,255,255,0.32), 0 0 50px rgba(255,143,192,0.2);
+  }
+
+  .avatar-wrap img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+
+  .avatar-placeholder{
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-soft);
+  }
+
+  .online-indicator {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 22px;
+    height: 22px;
+    background-color: var(--online);
+    border: 4px solid var(--card); 
+    border-radius: 50%;
+    z-index: 10;
+    animation: online-pulse 2.5s infinite;
+    display: none; 
+  }
+
+  .name{
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    background: linear-gradient(135deg, #FFFFFF 0%, var(--rose) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .tagline{
+    margin-top: 6px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    text-align: center;
+    margin-bottom: 26px;
+  }
+
+  .cta-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px; 
+  }
+
+  .cta-button {
+    width: 100%;
+    padding: 16px 18px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: var(--transition);
+    transform: translateZ(0); 
+    will-change: transform, box-shadow, filter;
+    position: relative; 
+    cursor: pointer;
+  }
+
+  .badge {
+    position: absolute;
+    top: -12px;
+    right: 16px;
+    background: #FF3B30;
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 5px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 8px rgba(255, 59, 48, 0.4);
+    animation: badge-pulse 2s infinite ease-in-out;
+    pointer-events: none;
+    border: 3px solid var(--card);
+    z-index: 10;
+  }
+
+  .cta-button img {
+    width: 24px;
+    height: 24px;
+    display: block;
+    object-fit: contain; 
+    flex-shrink: 0;
+    pointer-events: none; 
+  }
+
+  .cta-button:focus-visible{
+    outline: 2px solid var(--rose);
+    outline-offset: 3px;
+  }
+
+  .cta-light {
+    background: linear-gradient(180deg, #FFFFFF, var(--accent-deep));
+    color: #3A1830;
+    box-shadow: 0 4px 14px -6px rgba(0,0,0,0.3), 0 10px 20px rgba(255,143,192,0.15);
+  }
+
+  .cta-light:active {
+    transform: translateY(0) scale(0.98) translateZ(0);
+    filter: brightness(0.98);
+  }
+
+  .cta-rose {
+    background: linear-gradient(180deg, #FF8FC0, #D15A8F);
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px -6px rgba(0,0,0,0.4), 0 10px 20px rgba(209,90,143,0.2);
+    animation: alive-shake 2s infinite ease-in-out;
+  }
+
+  .cta-rose:active {
+    animation-play-state: paused;
+    transform: translateY(0) scale(0.98) translateZ(0);
+    filter: brightness(0.95);
+  }
+
+  @media (hover: hover) {
+    .cta-light:hover { 
+      transform: translateY(-2px) scale(1.01) translateZ(0); 
+      filter: brightness(1.04); 
+      box-shadow: 0 6px 18px -6px rgba(0,0,0,0.35), 0 18px 30px rgba(255,143,192,0.35), 0 0 20px rgba(255,255,255,0.2);
+    }
+    .cta-rose:hover { 
+      animation-play-state: paused;
+      transform: translateY(-2px) scale(1.03) translateZ(0); 
+      filter: brightness(1.06); 
+      box-shadow: 0 6px 18px -6px rgba(0,0,0,0.4), 0 18px 30px rgba(209,90,143,0.35), 0 0 20px rgba(255,143,192,0.3);
+    }
+    .btn-yes:hover { 
+      animation-play-state: paused;
+      transform: scale(1.04) translateZ(0); 
+      filter: brightness(1.06); 
+      box-shadow: 0 8px 20px -4px rgba(0,0,0,0.4), 0 15px 30px rgba(209,90,143,0.4);
+    }
+    .links-row a:hover{ color: var(--ink); transform: translateY(-1px); }
+  }
+
+  .links-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+    width: 100%;
+  }
+
+  .links-group { display: flex; align-items: center; gap: 12px; }
+
+  .links-row a{
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    display: inline-block;
+  }
+
+  .links-row .dot{
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--card-border);
+    flex-shrink: 0;
+  }
+
+  footer{
+    margin-top: 24px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--ink-soft);
+    opacity: 0.5;
+  }
+
+  /* ========================================================= */
+  /* СТИЛІ ВІКНА ВІКОВОЇ ПЕРЕВІРКИ (ТІЛЬКИ БЛЮР І ТЕКСТ БЕЗ ЕМОДЗІ) */
+  /* ========================================================= */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 11, 18, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    padding: 20px;
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal-title {
+    color: var(--accent);
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+    transform: translateY(15px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+
+  .modal-subtitle {
+    color: var(--ink-soft);
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 30px;
+    max-width: 280px;
+    transform: translateY(15px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .modal-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    width: 100%;
+    max-width: 280px;
+    transform: translateY(15px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  /* Анімація появи елементів */
+  .modal-overlay.active .modal-title,
+  .modal-overlay.active .modal-subtitle,
+  .modal-overlay.active .modal-buttons {
+    transform: translateY(0);
+  }
+
+  .modal-btn {
+    flex: 1;
+    padding: 16px 10px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-yes {
+    background: linear-gradient(180deg, #FF8FC0, #D15A8F);
+    color: #FFFFFF;
+    /* Легка плавна пульсація замість різкої тряски */
+    animation: btn-pulse-soft 2s infinite ease-in-out;
+  }
+
+  .btn-no {
+    background: rgba(255,255,255,0.05);
+    color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .btn-yes:active { 
+    animation-play-state: paused;
+    transform: scale(0.95); 
+    filter: brightness(0.95);
+  }
+  
+  .btn-no:active { 
+    transform: scale(0.95); 
+    background: rgba(255,255,255,0.1); 
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .page, .cta-button, .links-row a, .badge, .online-indicator, .modal-overlay, .modal-title, .modal-subtitle, .modal-buttons, .btn-yes {
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+    }
+    .avatar-outer::before{ animation: none; }
+  }
+
+  @media (max-width: 380px){
+    body{ padding: 20px 14px; }
+    .card{ padding: 30px 20px 24px; border-radius: 24px; }
+    .cta-button{ padding: 15px; font-size: 14px; }
+    .badge { top: -10px; right: 12px; font-size: 9px; padding: 4px 8px; }
+    .modal-title { font-size: 22px; }
+    .modal-subtitle { font-size: 12px; }
+    .modal-btn { font-size: 14px; padding: 14px 10px; }
+  }
+</style>
+</head>
+
+<body oncontextmenu="return false;">
+
+<div class="page">
+  <div class="card">
+    <div class="avatar-outer">
+      <div class="avatar-wrap">
+        <!-- Аватарка -->
+        <img id="ui-avatar" src="" alt="Avatar" loading="lazy" draggable="false">
+        <div class="avatar-placeholder">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7" stroke="currentColor" stroke-width="1.4"/>
+          </svg>
+        </div>
+      </div>
+      <!-- Позначка ОНЛАЙН -->
+      <div class="online-indicator" id="ui-online"></div>
+    </div>
+
+    <!-- Тексти -->
+    <div class="name" id="ui-name"></div>
+    <div class="tagline" id="ui-tagline"></div>
+
+    <div class="cta-group">
+      <!-- OnlyFans Button (Відкриває блюр перевірку) -->
+      <a id="ui-of-btn" class="cta-button cta-rose" href="#" target="_blank" rel="noopener noreferrer" draggable="false">
+        <div class="badge">Free Trial</div>
+        <img src="onlyfans_icon.png" alt="OnlyFans" draggable="false">
+        Only For Fans
+      </a>
+
+      <!-- Telegram Button -->
+      <a id="ui-tg-btn" class="cta-button cta-light" href="#" target="_blank" rel="noopener noreferrer" draggable="false">
+        <img src="telegram_icon.png" alt="Telegram" draggable="false">
+        My Telegram Channel
+      </a>
+    </div>
+
+    <div class="links-row">
+      <div class="links-group">
+        <a id="ui-ig-btn" href="#" target="_blank" rel="noopener noreferrer" draggable="false">Instagram</a>
+        <div class="dot"></div>
+        <a id="ui-th-btn" href="#" target="_blank" rel="noopener noreferrer" draggable="false">Threads</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2026 <span id="ui-footer-name"></span></footer>
+</div>
+
+<!-- ===================================================================== -->
+<!-- ВІКНО ВІКОВОЇ ПЕРЕВІРКИ (ТІЛЬКИ БЛЮР + ТЕКСТ ПО ЦЕНТРУ БЕЗ ЕМОДЗІ) -->
+<!-- ===================================================================== -->
+<div id="age-modal" class="modal-overlay">
+  <h2 class="modal-title">Are you 18 or older?</h2>
+  <p class="modal-subtitle">This website contains age-restricted content.</p>
+  <div class="modal-buttons">
+    <button id="btn-yes" class="modal-btn btn-yes">YES</button>
+    <button id="btn-no" class="modal-btn btn-no">NO</button>
+  </div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- СИСТЕМНІ СКРИПТИ -->
+<!-- ===================================================================== -->
+<script>
+  // Застосовуємо налаштування з конфігу (Повернули оригінальну логіку)
+  document.getElementById('ui-name').innerText = CONFIG.nickname;
+  document.getElementById('ui-footer-name').innerText = CONFIG.nickname;
+  document.getElementById('ui-tagline').innerText = CONFIG.tagline;
+  
+  // Всі посилання підтягуються в HTML одразу
+  document.getElementById('ui-of-btn').href = CONFIG.onlyfansLink;
+  document.getElementById('ui-tg-btn').href = CONFIG.telegramLink;
+  document.getElementById('ui-ig-btn').href = CONFIG.instagramLink;
+  document.getElementById('ui-th-btn').href = CONFIG.threadsLink;
+
+  // Керування статусом "Онлайн"
+  if (CONFIG.isOnline) {
+    document.getElementById('ui-online').style.display = 'block';
+  }
+
+  // Обробка аватарки
+  const avatarEl = document.getElementById('ui-avatar');
+  avatarEl.src = CONFIG.avatarFile;
+  avatarEl.onerror = function() {
+    this.onerror = null;
+    this.src = CONFIG.avatarFile.replace('.jpg', '.jpeg');
+    this.onerror = function() {
+      this.style.display = 'none';
+      this.nextElementSibling.style.display = 'flex';
+    };
+  };
+
+  // ЛОГІКА ВІКОВОЇ ПЕРЕВІРКИ
+  const ofBtn = document.getElementById('ui-of-btn');
+  const ageModal = document.getElementById('age-modal');
+  const btnYes = document.getElementById('btn-yes');
+  const btnNo = document.getElementById('btn-no');
+
+  // Відкрити блюр-вікно при кліку (зупиняє стандартний перехід миттєво)
+  ofBtn.addEventListener('click', function(e) {
+    e.preventDefault(); 
+    ageModal.classList.add('active');
+  });
+
+  // Натискання "YES"
+  btnYes.addEventListener('click', function() {
+    ageModal.classList.remove('active');
+    // Відкриває посилання з CONFIG після підтвердження віку
+    window.open(CONFIG.onlyfansLink, '_blank');
+  });
+
+  // Натискання "NO" (просто закриває)
+  btnNo.addEventListener('click', function() {
+    ageModal.classList.remove('active');
+  });
+
+  // Захист контенту
+  document.addEventListener('contextmenu', event => event.preventDefault()); 
+  document.addEventListener('dragstart', event => event.preventDefault());   
+  document.onkeydown = function(e) {
+    if (e.keyCode == 123) return false; 
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; 
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; 
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; 
+    if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; 
+    if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) return false; 
+    if (e.ctrlKey && e.keyCode == 'C'.charCodeAt(0)) return false; 
+  };
+</script>
+</body>
+</html>
