@@ -21,8 +21,8 @@
     isOnline: false, 
 
     // 2. ГОЛОВНІ КНОПКИ (Вставляй свої посилання між лапками)
-    onlyfansLink: "https://www.stacked.com/@lana_dlore/membership?lang=en", 
-    telegramLink: "https://t.me/+4uCv9ky1A5I1M2Qy",             
+    onlyfansLink: "https://onlyfans.com/твоє_посилання", 
+    telegramLink: "https://t.me/твій_канал",             
 
     // 3. НИЖНІ ПОСИЛАННЯ (Instagram, Threads)
     instagramLink: "https://www.instagram.com/lana_dlore/",
@@ -94,7 +94,6 @@
     80% { transform: translateZ(0) scale(1.03) translateX(3px) rotate(1deg); }
   }
 
-  /* М'яка пульсація для кнопки YES */
   @keyframes btn-pulse-soft {
     0%, 100% { 
       transform: scale(1); 
@@ -368,7 +367,7 @@
   }
 
   /* ========================================================= */
-  /* СТИЛІ ВІКНА ВІКОВОЇ ПЕРЕВІРКИ (ТІЛЬКИ БЛЮР І ТЕКСТ БЕЗ ЕМОДЗІ) */
+  /* СТИЛІ ДЛЯ МОДАЛЬНИХ ВІКОН (Вік та In-App Browser) */
   /* ========================================================= */
   .modal-overlay {
     position: fixed;
@@ -391,6 +390,12 @@
     padding: 20px;
   }
 
+  /* Спеціальний фон для перехоплювача Instagram (щоб не було видно контент) */
+  .modal-overlay.solid-bg {
+    background: var(--bg);
+    z-index: 100000;
+  }
+
   .modal-overlay.active {
     opacity: 1;
     pointer-events: auto;
@@ -409,10 +414,10 @@
 
   .modal-subtitle {
     color: var(--ink-soft);
-    font-size: 13px;
-    line-height: 1.4;
+    font-size: 14px;
+    line-height: 1.5;
     margin-bottom: 30px;
-    max-width: 280px;
+    max-width: 300px;
     transform: translateY(15px);
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
@@ -449,7 +454,6 @@
   .btn-yes {
     background: linear-gradient(180deg, #FF8FC0, #D15A8F);
     color: #FFFFFF;
-    /* Легка плавна пульсація замість різкої тряски */
     animation: btn-pulse-soft 2s infinite ease-in-out;
   }
 
@@ -470,8 +474,24 @@
     background: rgba(255,255,255,0.1); 
   }
 
+  /* Анімація стрілочки для In-App браузера */
+  .in-app-arrow {
+    position: absolute;
+    top: 40px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    color: var(--rose);
+    animation: arrow-bounce 1s infinite alternate ease-in-out;
+  }
+
+  @keyframes arrow-bounce {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(12px, -12px); }
+  }
+
   @media (prefers-reduced-motion: reduce){
-    .page, .cta-button, .links-row a, .badge, .online-indicator, .modal-overlay, .modal-title, .modal-subtitle, .modal-buttons, .btn-yes {
+    .page, .cta-button, .links-row a, .badge, .online-indicator, .modal-overlay, .modal-title, .modal-subtitle, .modal-buttons, .btn-yes, .in-app-arrow {
       animation: none !important;
       transition: none !important;
       transform: none !important;
@@ -485,7 +505,7 @@
     .cta-button{ padding: 15px; font-size: 14px; }
     .badge { top: -10px; right: 12px; font-size: 9px; padding: 4px 8px; }
     .modal-title { font-size: 22px; }
-    .modal-subtitle { font-size: 12px; }
+    .modal-subtitle { font-size: 13px; }
     .modal-btn { font-size: 14px; padding: 14px 10px; }
   }
 </style>
@@ -515,8 +535,8 @@
     <div class="tagline" id="ui-tagline"></div>
 
     <div class="cta-group">
-      <!-- OnlyFans Button (Відкриває блюр перевірку) -->
-      <a id="ui-of-btn" class="cta-button cta-rose" href="#" target="_blank" rel="noopener noreferrer" draggable="false">
+      <!-- OnlyFans Button (Відкриває блюр перевірку, переадресація в тому ж вікні) -->
+      <a id="ui-of-btn" class="cta-button cta-rose" href="#" draggable="false">
         <div class="badge">Free Trial</div>
         <img src="onlyfans_icon.png" alt="OnlyFans" draggable="false">
         Only For Fans
@@ -542,11 +562,11 @@
 </div>
 
 <!-- ===================================================================== -->
-<!-- ВІКНО ВІКОВОЇ ПЕРЕВІРКИ (ТІЛЬКИ БЛЮР + ТЕКСТ ПО ЦЕНТРУ БЕЗ ЕМОДЗІ) -->
+<!-- ВІКНО ВІКОВОЇ ПЕРЕВІРКИ -->
 <!-- ===================================================================== -->
 <div id="age-modal" class="modal-overlay">
   <h2 class="modal-title">Are you 18 or older?</h2>
-  <p class="modal-subtitle">this website contains age-restricted content</p>
+  <p class="modal-subtitle">This website contains age-restricted content.</p>
   <div class="modal-buttons">
     <button id="btn-yes" class="modal-btn btn-yes">YES</button>
     <button id="btn-no" class="modal-btn btn-no">NO</button>
@@ -554,15 +574,30 @@
 </div>
 
 <!-- ===================================================================== -->
+<!-- IN-APP BROWSER OVERLAY (Екран для Instagram/Threads) -->
+<!-- ===================================================================== -->
+<div id="in-app-overlay" class="modal-overlay solid-bg">
+  <svg class="in-app-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="7" y1="17" x2="17" y2="7"></line>
+    <polyline points="7 7 17 7 17 17"></polyline>
+  </svg>
+  <h2 class="modal-title" style="font-size: 24px;">Open in Browser</h2>
+  <p class="modal-subtitle">Instagram and Threads block access to this content.<br><br>Tap the <strong>(...) menu</strong> in the top right corner and select <strong>"Open in system browser"</strong>.</p>
+  
+  <div class="modal-buttons" style="max-width: 250px;">
+    <button id="copy-link-btn" class="modal-btn btn-no" style="width: 100%;">🔗 Copy Website Link</button>
+  </div>
+</div>
+
+<!-- ===================================================================== -->
 <!-- СИСТЕМНІ СКРИПТИ -->
 <!-- ===================================================================== -->
 <script>
-  // Застосовуємо налаштування з конфігу (Повернули оригінальну логіку)
+  // Застосовуємо налаштування з конфігу
   document.getElementById('ui-name').innerText = CONFIG.nickname;
   document.getElementById('ui-footer-name').innerText = CONFIG.nickname;
   document.getElementById('ui-tagline').innerText = CONFIG.tagline;
   
-  // Всі посилання підтягуються в HTML одразу
   document.getElementById('ui-of-btn').href = CONFIG.onlyfansLink;
   document.getElementById('ui-tg-btn').href = CONFIG.telegramLink;
   document.getElementById('ui-ig-btn').href = CONFIG.instagramLink;
@@ -585,26 +620,53 @@
     };
   };
 
-  // ЛОГІКА ВІКОВОЇ ПЕРЕВІРКИ
+  // -----------------------------------------------------------
+  // 1. ПЕРЕВІРКА НА ВБУДОВАНИЙ БРАУЗЕР (Instagram/Threads/TikTok)
+  // -----------------------------------------------------------
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  const isInApp = (ua.indexOf('Instagram') > -1 || ua.indexOf('Barcelona') > -1 || ua.indexOf('Threads') > -1 || ua.indexOf('FBAN') > -1 || ua.indexOf('FBAV') > -1 || ua.indexOf('TikTok') > -1);
+  
+  if (isInApp) {
+    // Якщо відкрили через інсту, показуємо екран перехоплення
+    document.getElementById('in-app-overlay').classList.add('active');
+  }
+
+  // Кнопка "Скопіювати лінк" на екрані перехоплення
+  document.getElementById('copy-link-btn').addEventListener('click', function() {
+    const btn = this;
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      btn.innerText = '✅ Link Copied!';
+      btn.style.background = 'rgba(36, 211, 102, 0.2)'; // Зеленуватий фон
+      btn.style.color = '#24d366';
+      setTimeout(() => { 
+        btn.innerText = '🔗 Copy Website Link'; 
+        btn.style.background = 'rgba(255,255,255,0.05)';
+        btn.style.color = '#FFFFFF';
+      }, 2500);
+    });
+  });
+
+  // -----------------------------------------------------------
+  // 2. ЛОГІКА ВІКОВОЇ ПЕРЕВІРКИ
+  // -----------------------------------------------------------
   const ofBtn = document.getElementById('ui-of-btn');
   const ageModal = document.getElementById('age-modal');
   const btnYes = document.getElementById('btn-yes');
   const btnNo = document.getElementById('btn-no');
 
-  // Відкрити блюр-вікно при кліку (зупиняє стандартний перехід миттєво)
+  // Відкрити блюр-вікно при кліку
   ofBtn.addEventListener('click', function(e) {
     e.preventDefault(); 
     ageModal.classList.add('active');
   });
 
-  // Натискання "YES"
+  // Натискання "YES" (АВТО-ПЕРЕАДРЕСАЦІЯ)
   btnYes.addEventListener('click', function() {
     ageModal.classList.remove('active');
-    // Відкриває посилання з CONFIG після підтвердження віку
-    window.open(CONFIG.onlyfansLink, '_blank');
+    window.location.href = CONFIG.onlyfansLink;
   });
 
-  // Натискання "NO" (просто закриває)
+  // Натискання "NO"
   btnNo.addEventListener('click', function() {
     ageModal.classList.remove('active');
   });
