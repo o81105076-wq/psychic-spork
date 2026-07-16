@@ -13,7 +13,7 @@
 <script>
   const CONFIG = {
     // 1. ПРОФІЛЬ (Текст та картинки)
-    avatarFile: "logo_icon.jpg",  // Назва файлу твоєї аватарки
+    avatarFile: "logo_icon.gif",  // Назва файлу аватарки (підтримуються: .jpg, .jpeg, .png, .gif)
     nickname: "Lana D'Loré",      // Твій головний нікнейм
     tagline: "❤️ Ready to be one of my Kings? 👑", // Підпис під ніком
     
@@ -21,8 +21,8 @@
     isOnline: false, 
 
     // 2. ГОЛОВНІ КНОПКИ (Вставляй свої посилання між лапками)
-    onlyfansLink: "https://www.stacked.com/@lana_dlore/membership?lang=en", 
-    telegramLink: "https://t.me/+4uCv9ky1A5I1M2Qy",             
+    onlyfansLink: "https://onlyfans.com/твоє_посилання", 
+    telegramLink: "https://t.me/твій_канал",             
 
     // 3. НИЖНІ ПОСИЛАННЯ (Instagram, Threads)
     instagramLink: "https://www.instagram.com/lana_dlore/",
@@ -390,7 +390,6 @@
     padding: 20px;
   }
 
-  /* Спеціальний фон для перехоплювача браузерів (щоб не було видно контент) */
   .modal-overlay.solid-bg {
     background: var(--bg);
     z-index: 100000;
@@ -432,7 +431,6 @@
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
-  /* Анімація появи елементів */
   .modal-overlay.active .modal-title,
   .modal-overlay.active .modal-subtitle,
   .modal-overlay.active .modal-buttons {
@@ -474,7 +472,6 @@
     background: rgba(255,255,255,0.1); 
   }
 
-  /* Анімація стрілочки для In-App браузера */
   .in-app-arrow {
     position: absolute;
     top: 40px;
@@ -577,7 +574,6 @@
 <!-- IN-APP BROWSER OVERLAY (Екран для Telegram/Instagram/Threads) -->
 <!-- ===================================================================== -->
 <div id="in-app-overlay" class="modal-overlay solid-bg">
-  <!-- Стрілочка вказує в кут екрана -->
   <svg class="in-app-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
     <line x1="7" y1="17" x2="17" y2="7"></line>
     <polyline points="7 7 17 7 17 17"></polyline>
@@ -613,24 +609,35 @@
     document.getElementById('ui-online').style.display = 'block';
   }
 
-  // Обробка аватарки
+  // -----------------------------------------------------------
+  // ОБРОБКА АВАТАРКИ (РОЗУМНИЙ ПОШУК ФАЙЛУ: gif, jpg, png)
+  // -----------------------------------------------------------
   const avatarEl = document.getElementById('ui-avatar');
+  const exts = ['.jpg', '.jpeg', '.png', '.gif'];
+  let extIndex = 0;
+  // Витягуємо назву файлу без розширення (напр. "logo_icon")
+  const baseName = CONFIG.avatarFile.substring(0, CONFIG.avatarFile.lastIndexOf('.')) || CONFIG.avatarFile;
+
+  // Пробуємо завантажити те, що вказано в конфігу
   avatarEl.src = CONFIG.avatarFile;
+  
   avatarEl.onerror = function() {
-    this.onerror = null;
-    this.src = CONFIG.avatarFile.replace('.jpg', '.jpeg');
-    this.onerror = function() {
+    // Якщо файл не знайдено, перебираємо інші розширення
+    if (extIndex < exts.length) {
+      this.src = baseName + exts[extIndex];
+      extIndex++;
+    } else {
+      // Якщо жоден не підійшов — показуємо заглушку
+      this.onerror = null;
       this.style.display = 'none';
       this.nextElementSibling.style.display = 'flex';
-    };
+    }
   };
 
   // -----------------------------------------------------------
-  // 1. ПЕРЕВІРКА НА ВБУДОВАНИЙ БРАУЗЕР (Instagram / Threads / Telegram / TikTok)
+  // 1. ПЕРЕВІРКА НА ВБУДОВАНИЙ БРАУЗЕР (Instagram / Telegram тощо)
   // -----------------------------------------------------------
   const ua = navigator.userAgent || navigator.vendor || window.opera;
-  
-  // Додали 'Telegram' до списку перевірки
   const isInApp = (
     ua.indexOf('Instagram') > -1 || 
     ua.indexOf('Barcelona') > -1 || 
@@ -642,16 +649,15 @@
   );
   
   if (isInApp) {
-    // Якщо відкрили через месенджер/соцмережу, показуємо екран перехоплення
     document.getElementById('in-app-overlay').classList.add('active');
   }
 
-  // Кнопка "Скопіювати лінк" на екрані перехоплення
+  // Кнопка "Скопіювати лінк"
   document.getElementById('copy-link-btn').addEventListener('click', function() {
     const btn = this;
     navigator.clipboard.writeText(window.location.href).then(() => {
       btn.innerText = '✅ Link Copied!';
-      btn.style.background = 'rgba(36, 211, 102, 0.2)'; // Зеленуватий фон
+      btn.style.background = 'rgba(36, 211, 102, 0.2)'; 
       btn.style.color = '#24d366';
       setTimeout(() => { 
         btn.innerText = '🔗 Copy Website Link'; 
@@ -669,7 +675,6 @@
   const btnYes = document.getElementById('btn-yes');
   const btnNo = document.getElementById('btn-no');
 
-  // Відкрити блюр-вікно при кліку
   ofBtn.addEventListener('click', function(e) {
     e.preventDefault(); 
     ageModal.classList.add('active');
@@ -681,7 +686,6 @@
     window.location.href = CONFIG.onlyfansLink;
   });
 
-  // Натискання "NO"
   btnNo.addEventListener('click', function() {
     ageModal.classList.remove('active');
   });
