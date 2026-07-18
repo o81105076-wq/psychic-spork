@@ -22,11 +22,11 @@
     tagline: "❤️ Ready to be one of my Kings? 👑", // Підпис під ніком
     
     // СТАТУС ОНЛАЙН (true - увімкнено, false - вимкнено)
-    isOnline: true, 
+    isOnline: false, 
 
     // 2. ГОЛОВНІ КНОПКИ (Вставляй свої посилання між лапками)
-    onlyfansLink: "https://www.stacked.com/l/7b49auwp", 
-    telegramLink: "https://t.me/+4uCv9ky1A5I1M2Qy",          
+    onlyfansLink: "https://www.stacked.com/@lana_dlore/membership?lang=en", 
+    telegramLink: "https://t.me/+4uCv9ky1A5I1M2Qy",             
 
     // 3. НИЖНІ ПОСИЛАННЯ (Instagram, Threads)
     instagramLink: "https://www.instagram.com/lana_dlore/",
@@ -371,7 +371,7 @@
   }
 
   /* ========================================================= */
-  /* СТИЛІ ДЛЯ МОДАЛЬНОГО ВІКНА ВІКОВОЇ ПЕРЕВІРКИ */
+  /* СТИЛІ ДЛЯ МОДАЛЬНИХ ВІКОН (Вік та In-App Browser) */
   /* ========================================================= */
   .modal-overlay {
     position: fixed;
@@ -392,6 +392,11 @@
     pointer-events: none;
     transition: opacity 0.3s ease;
     padding: 20px;
+  }
+
+  .modal-overlay.solid-bg {
+    background: var(--bg);
+    z-index: 100000;
   }
 
   .modal-overlay.active {
@@ -471,8 +476,23 @@
     background: rgba(255,255,255,0.1); 
   }
 
+  .in-app-arrow {
+    position: absolute;
+    top: 40px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    color: var(--rose);
+    animation: arrow-bounce 1s infinite alternate ease-in-out;
+  }
+
+  @keyframes arrow-bounce {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(12px, -12px); }
+  }
+
   @media (prefers-reduced-motion: reduce){
-    .page, .cta-button, .links-row a, .badge, .online-indicator, .modal-overlay, .modal-title, .modal-subtitle, .modal-buttons, .btn-yes {
+    .page, .cta-button, .links-row a, .badge, .online-indicator, .modal-overlay, .modal-title, .modal-subtitle, .modal-buttons, .btn-yes, .in-app-arrow {
       animation: none !important;
       transition: none !important;
       transform: none !important;
@@ -555,6 +575,26 @@
 </div>
 
 <!-- ===================================================================== -->
+<!-- IN-APP BROWSER OVERLAY (Екран перехоплення) -->
+<!-- ===================================================================== -->
+<div id="in-app-overlay" class="modal-overlay solid-bg">
+  <svg class="in-app-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="7" y1="17" x2="17" y2="7"></line>
+    <polyline points="7 7 17 7 17 17"></polyline>
+  </svg>
+  
+  <h2 class="modal-title" style="font-size: 24px;">Open in Browser</h2>
+  <p class="modal-subtitle">
+    To view this content properly and access all features, please open this page in your system browser (Safari/Chrome).<br><br>
+    Tap the <strong>menu (...)</strong> or Safari icon and select <strong>"Open in browser"</strong>.
+  </p>
+  
+  <div class="modal-buttons" style="max-width: 250px;">
+    <button id="copy-link-btn" class="modal-btn btn-no" style="width: 100%;">🔗 Copy Website Link</button>
+  </div>
+</div>
+
+<!-- ===================================================================== -->
 <!-- СИСТЕМНІ СКРИПТИ -->
 <!-- ===================================================================== -->
 <script>
@@ -591,7 +631,55 @@
   };
 
   // -----------------------------------------------------------
-  // ЛОГІКА ВІКОВОЇ ПЕРЕВІРКИ
+  // 1. ПЕРЕВІРКА НА ВБУДОВАНИЙ БРАУЗЕР (Instagram / Telegram тощо)
+  // -----------------------------------------------------------
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  const isAndroid = /android/i.test(ua);
+  
+  const isInApp = (
+    ua.indexOf('Instagram') > -1 || 
+    ua.indexOf('Barcelona') > -1 || 
+    ua.indexOf('Threads') > -1 || 
+    ua.indexOf('FBAN') > -1 || 
+    ua.indexOf('FBAV') > -1 || 
+    ua.indexOf('TikTok') > -1 || 
+    ua.indexOf('Telegram') > -1
+  );
+  
+  if (isInApp) {
+    if (isAndroid) {
+      // Спроба автоматично відкрити Chrome на Android
+      const currentUrl = window.location.href.replace(/^https?:\/\//, '');
+      const intentUrl = `intent://${currentUrl}#Intent;scheme=https;package=com.android.chrome;end;`;
+      window.location.href = intentUrl;
+      
+      // Якщо авто-перехід не спрацював за 1 секунду — показуємо підказку
+      setTimeout(() => {
+        document.getElementById('in-app-overlay').classList.add('active');
+      }, 1000);
+    } else {
+      // Для iOS (iPhone) — відразу показуємо екран із проханням відкрити в Safari
+      document.getElementById('in-app-overlay').classList.add('active');
+    }
+  }
+
+  // Кнопка "Скопіювати лінк" на екрані перехоплення
+  document.getElementById('copy-link-btn').addEventListener('click', function() {
+    const btn = this;
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      btn.innerText = '✅ Link Copied!';
+      btn.style.background = 'rgba(36, 211, 102, 0.2)'; 
+      btn.style.color = '#24d366';
+      setTimeout(() => { 
+        btn.innerText = '🔗 Copy Website Link'; 
+        btn.style.background = 'rgba(255,255,255,0.05)';
+        btn.style.color = '#FFFFFF';
+      }, 2500);
+    });
+  });
+
+  // -----------------------------------------------------------
+  // 2. ЛОГІКА ВІКОВОЇ ПЕРЕВІРКИ
   // -----------------------------------------------------------
   const ofBtn = document.getElementById('ui-of-btn');
   const ageModal = document.getElementById('age-modal');
@@ -603,7 +691,7 @@
     ageModal.classList.add('active');
   });
 
-  // Натискання "YES" (АВТО-ПЕРЕАДРЕСАЦІЯ)
+  // Натискання "YES" (АВТО-ПЕРЕАДРЕСАЦІЯ В ЦІЙ ЖЕ ВКЛАДЦІ)
   btnYes.addEventListener('click', function() {
     ageModal.classList.remove('active');
     window.location.href = CONFIG.onlyfansLink;
