@@ -3,383 +3,436 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#120B12">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https: file:; script-src 'self' 'unsafe-inline';">
+<meta name="theme-color" content="#0a0809">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; media-src 'self'; img-src 'self' data: https: file:; script-src 'self' 'unsafe-inline';">
 
-<!-- ЗАМІНА ГЛОБУСА НА ВКЛАДЦІ НА ЕМОДЗІ БІЛОГО СЕРЦЯ 🤍 -->
+<!-- Favicon: Біле серце 🤍 -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤍</text></svg>">
 
 <title>Lana D'Loré</title>
 
 <!-- ===================================================================== -->
-<!-- ⚙️ ПАНЕЛЬ ШВИДКИХ НАЛАШТУВАНЬ (ЗМІНЮЙ ДАНІ ТІЛЬКИ В ЦЬОМУ БЛОЦІ) ⚙️ -->
+<!-- ⚙️ ПАНЕЛЬ ШВИДКИХ НАЛАШТУВАНЬ ⚙️ -->
 <!-- ===================================================================== -->
 <script>
   const CONFIG = {
-    // 1. ПРОФІЛЬ (Текст та картинки)
-    avatarFile: "logo_icon.gif",  // Назва файлу аватарки (підтримуються: .jpg, .jpeg, .png, .gif)
-    nickname: "Lana D'Loré",      // Твій головний нікнейм
-    tagline: "❤️ Ready to be one of my Kings? 👑", // Підпис під ніком
-    
-    // СТАТУС ОНЛАЙН (true - увімкнено, false - вимкнено)
-    isOnline: false, 
+    // 1. ПРОФІЛЬ
+    nickname: "Lana D'Loré",      
+    tagline: "@lana_dlore",        
 
-    // 2. ГОЛОВНІ КНОПКИ (Вставляй свої посилання між лапками)
+    // 2. ГЛОБАЛЬНИЙ ФОН (ВІДЕО АБО ФОТО ДЛЯ ЗАДНЬОГО ПЛАНУ)
+    mainBackgroundMedia: "bg_video.mp4", 
+
+    // 3. ПЕРША КНОПКА (ONLYFANS) - ГІФКА/ФОТО ДЛЯ САМОЇ КНОПКИ
     onlyfansLink: "https://www.stacked.com/l/7b49auwp", 
-    telegramLink: "https://t.me/+4uCv9ky1A5I1M2Qy",             
+    btnOnlyFansText: "More of me", 
+    btnOnlyFansBg: "of_bg.jpg", // Виправив назву файлу на правильну
 
-    // 3. НИЖНІ ПОСИЛАННЯ (Instagram, Threads)
-    instagramLink: "https://www.instagram.com/lana_dlore/",
-    threadsLink: "https://www.threads.net/@lana_dlore"
+    // 4. ДРУГА КНОПКА (TELEGRAM)
+    telegramLink: "https://t.me/+4uCv9ky1A5I1M2Qy",             
+    btnTelegramText: "Community", 
+    btnTelegramBg: "tg_bg.jpg",       
+
+    // 5. НИЖНІ ПОСИЛАННЯ
+    instagramLink: "https://www.instagram.com/lana_dlore/"
   };
 </script>
-<!-- ===================================================================== -->
-<!-- КІНЕЦЬ НАЛАШТУВАНЬ (ДАЛІ КОД НЕ ЧІПАЙ)                                -->
 <!-- ===================================================================== -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Raleway:wght@500;600;700&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --bg: #120B12;
-    --card: #1C121C;
-    --card-border: #34222F;
-    --ink: #FBF3F6;
-    --ink-soft: #B79AAC;
-    --accent: #FFFFFF;
-    --accent-deep: #F6C9DC;
-    --rose: #FF8FC0;
-    --online: #24d366; 
-    --transition: all 0.22s ease;
+  :root {
+    --bg-dark: #0a0809;
+    --text-main: #f5ecee;
+    --text-muted: rgba(245, 236, 238, 0.6);
+    --glass-bg: rgba(20, 15, 18, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
   *{ margin:0; padding:0; box-sizing:border-box; }
 
-  html, body{
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Inter', sans-serif;
+  html, body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     height: 100%;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none; 
     -webkit-touch-callout: none; 
     touch-action: manipulation;
   }
 
-  body{
+  body {
     min-height: 100vh;
     min-height: 100dvh;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 40px 20px calc(40px + env(safe-area-inset-bottom));
+    align-items: stretch; 
     position: relative;
     overflow-x: hidden;
-    background:
-      radial-gradient(60% 30% at 50% 18%, rgba(255,255,255,0.10), transparent 68%),
-      radial-gradient(65% 36% at 50% 88%, rgba(255,143,192,0.09), transparent 72%),
-      var(--bg);
   }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes alive-shake {
-    0%, 100% { transform: translateZ(0) scale(1) translateX(0) rotate(0); }
-    20% { transform: translateZ(0) scale(1.03) translateX(-3px) rotate(-1deg); box-shadow: 0 8px 18px -4px rgba(0,0,0,0.4), 0 14px 24px rgba(209,90,143,0.35); }
-    40% { transform: translateZ(0) scale(1.03) translateX(3px) rotate(1deg); }
-    60% { transform: translateZ(0) scale(1.03) translateX(-3px) rotate(-1deg); }
-    80% { transform: translateZ(0) scale(1.03) translateX(3px) rotate(1deg); }
-  }
-
-  @keyframes btn-pulse-soft {
-    0%, 100% { 
-      transform: scale(1); 
-      box-shadow: 0 4px 14px -6px rgba(0,0,0,0.4), 0 10px 20px rgba(209,90,143,0.2); 
-    }
-    50% { 
-      transform: scale(1.04); 
-      box-shadow: 0 8px 20px -4px rgba(0,0,0,0.4), 0 15px 30px rgba(209,90,143,0.4); 
-    }
-  }
-
-  @keyframes badge-pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.08); box-shadow: 0 4px 12px rgba(255, 59, 48, 0.6); }
-  }
-
-  @keyframes online-pulse {
-    0% { box-shadow: 0 0 0 0 rgba(36, 211, 102, 0.5); }
-    70% { box-shadow: 0 0 0 10px rgba(36, 211, 102, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(36, 211, 102, 0); }
-  }
-
-  .page{
-    width: 100%;
-    max-width: 360px;
+  /* ========================================= */
+  /* ЕКРАН ЗАВАНТАЖЕННЯ (ПРЕЛОАДЕР) */
+  /* ========================================= */
+  .preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(10, 8, 9, 0.85); 
+    backdrop-filter: blur(35px); 
+    -webkit-backdrop-filter: blur(35px);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    animation: fadeUp 0.9s ease both;
-    will-change: transform, opacity;
-  }
-
-  .card{
-    width: 100%;
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: 28px;
-    padding: 40px 28px 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 8px 24px -12px rgba(0,0,0,0.45), 0 40px 90px -40px rgba(0,0,0,0.65), 0 0 80px rgba(255,255,255,0.025);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-
-  .avatar-outer{
-    position: relative;
-    width: 108px;
-    height: 108px;
-    display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
   }
 
-  .avatar-outer::before{
-    content: "";
-    position: absolute;
-    inset: -20px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,255,255,0.55) 0%, rgba(255,220,235,0.32) 30%, rgba(255,143,192,0.16) 55%, rgba(255,143,192,0) 78%);
-    filter: blur(12px);
-    animation: pulse-glow 4s ease-in-out infinite;
+  .preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .preloader-name {
+    font-family: 'Raleway', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    animation: preloader-pulse 2s infinite alternate ease-in-out;
+  }
+
+  .preloader-text {
+    margin-top: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    color: var(--text-muted);
+    animation: preloader-pulse 2s infinite alternate ease-in-out;
+    animation-delay: 0.5s; 
+  }
+
+  @keyframes preloader-pulse {
+    0% { opacity: 0.3; filter: blur(2px); transform: scale(0.98); }
+    100% { opacity: 1; filter: blur(0px); transform: scale(1); text-shadow: 0 0 20px rgba(255,255,255,0.4); }
+  }
+
+  /* ========================================= */
+  /* ГЛОБАЛЬНИЙ ФОН (БЛЮР + ВІДЕО/ФОТО) */
+  /* ========================================= */
+  .global-blur-bg {
+    position: fixed;
+    top: -15%; left: -15%;
+    width: 130%; height: 130%; 
+    z-index: -3;
     pointer-events: none;
-  }
-
-  @keyframes pulse-glow{
-    0%, 100%{ opacity: 0.75; transform: scale(1); }
-    50%{ opacity: 1; transform: scale(1.05); }
-  }
-
-  .avatar-wrap{
-    position: relative;
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
     overflow: hidden;
-    background: linear-gradient(160deg, #2A1C26 0%, #150E14 100%);
-    border: 2px solid rgba(255,255,255,0.55);
-    box-shadow: 0 0 0 5px var(--card), 0 0 20px rgba(255,255,255,0.32), 0 0 50px rgba(255,143,192,0.2);
+    background: #000;
   }
 
-  .avatar-wrap img{
+  .global-media {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: blur(55px) brightness(0.35) saturate(1.3);
+    transform: scale(1.1);
+  }
+
+  .global-tint {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background: radial-gradient(circle at center, rgba(10, 8, 9, 0.2) 0%, rgba(10, 8, 9, 0.7) 100%);
+  }
+
+  /* ========================================= */
+  /* ГОЛОВНА КАРТКА */
+  /* ========================================= */
+  .page {
+    position: relative;
+    z-index: 1;
+    flex: 1 0 auto;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    opacity: 0; 
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .page.loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .card {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    min-width: 320px;
+    min-height: 100%;
+    background: #000000;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .card {
+      margin: 40px 0;
+      border-radius: 32px;
+      box-shadow: 0px 30px 80px -10px rgba(0,0,0,0.8);
+      min-height: auto;
+    }
+  }
+
+  .card-bg-layer {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    background: var(--bg-dark);
+  }
+  
+  .card-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10, 8, 9, 0.4) 0%, rgba(10, 8, 9, 0.8) 100%);
+  }
+
+  .media-fill {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-    pointer-events: none;
+    object-position: center;
   }
 
-  .avatar-placeholder{
-    position: absolute;
-    inset: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    color: var(--ink-soft);
-  }
-
-  .online-indicator {
-    position: absolute;
-    bottom: 4px;
-    right: 4px;
-    width: 22px;
-    height: 22px;
-    background-color: var(--online);
-    border: 4px solid var(--card); 
-    border-radius: 50%;
-    z-index: 10;
-    animation: online-pulse 2.5s infinite;
-    display: none; 
-  }
-
-  .name{
-    margin-top: 20px;
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    background: linear-gradient(135deg, #FFFFFF 0%, var(--rose) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .tagline{
-    margin-top: 6px;
-    font-size: 13.5px;
-    color: var(--ink-soft);
-    text-align: center;
-    margin-bottom: 26px;
-  }
-
-  .cta-group {
+  .card-content {
+    position: relative;
+    z-index: 1;
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 16px; 
+    align-items: center;
+    padding: 60px 24px 30px 24px;
+    height: 100%;
   }
 
-  .cta-button {
+  /* ========================================= */
+  /* ІМ'Я ТА ПІДПИС */
+  /* ========================================= */
+  .header-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
     width: 100%;
-    padding: 16px 18px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 15px;
-    text-decoration: none;
-    border-radius: 999px;
+    margin-bottom: 24px;
+  }
+
+  .title-row {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    transition: var(--transition);
-    transform: translateZ(0); 
-    will-change: transform, box-shadow, filter;
-    position: relative; 
-    cursor: pointer;
+    margin-bottom: 8px;
   }
 
-  .badge {
+  .title-text {
+    font-family: 'Raleway', sans-serif;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.1;
+    text-align: center;
+    color: var(--text-main);
+    text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    letter-spacing: -0.01em;
+  }
+
+  .verified-icon {
     position: absolute;
-    top: -12px;
-    right: 16px;
-    background: #FF3B30;
-    color: #FFFFFF;
-    font-size: 10px;
-    font-weight: 800;
-    padding: 5px 10px;
-    border-radius: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 8px rgba(255, 59, 48, 0.4);
-    animation: badge-pulse 2s infinite ease-in-out;
-    pointer-events: none;
-    border: 3px solid var(--card);
-    z-index: 10;
-  }
-
-  .cta-button img {
+    left: 100%; 
+    margin-left: 8px;
     width: 24px;
     height: 24px;
-    display: block;
-    object-fit: contain; 
-    flex-shrink: 0;
-    pointer-events: none; 
+    fill: #1D9BF0; 
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
   }
 
-  .cta-button:focus-visible{
-    outline: 2px solid var(--rose);
-    outline-offset: 3px;
+  .subtitle-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
   }
 
-  .cta-light {
-    background: linear-gradient(180deg, #FFFFFF, var(--accent-deep));
-    color: #3A1830;
-    box-shadow: 0 4px 14px -6px rgba(0,0,0,0.3), 0 10px 20px rgba(255,143,192,0.15);
+  /* ========================================= */
+  /* ІКОНКА ІНСТАГРАМ */
+  /* ========================================= */
+  .social-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
   }
 
-  .cta-light:active {
-    transform: translateY(0) scale(0.98) translateZ(0);
-    filter: brightness(0.98);
+  .social-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+  
+  .social-btn:active { transform: scale(0.92); }
+
+  .social-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--text-main);
   }
 
-  .cta-rose {
-    background: linear-gradient(180deg, #FF8FC0, #D15A8F);
-    color: #FFFFFF;
-    box-shadow: 0 4px 14px -6px rgba(0,0,0,0.4), 0 10px 20px rgba(209,90,143,0.2);
-    animation: alive-shake 2s infinite ease-in-out;
+  /* ========================================= */
+  /* ФОТО-КНОПКИ */
+  /* ========================================= */
+  .links-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
 
-  .cta-rose:active {
-    animation-play-state: paused;
-    transform: translateY(0) scale(0.98) translateZ(0);
-    filter: brightness(0.95);
+  .link-card {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    text-decoration: none;
+    cursor: pointer;
+    transform: translateZ(0);
+    transition: var(--transition);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
   }
 
-  @media (hover: hover) {
-    .cta-light:hover { 
-      transform: translateY(-2px) scale(1.01) translateZ(0); 
-      filter: brightness(1.04); 
-      box-shadow: 0 6px 18px -6px rgba(0,0,0,0.35), 0 18px 30px rgba(255,143,192,0.35), 0 0 20px rgba(255,255,255,0.2);
-    }
-    .cta-rose:hover { 
-      animation-play-state: paused;
-      transform: translateY(-2px) scale(1.03) translateZ(0); 
-      filter: brightness(1.06); 
-      box-shadow: 0 6px 18px -6px rgba(0,0,0,0.4), 0 18px 30px rgba(209,90,143,0.35), 0 0 20px rgba(255,143,192,0.3);
-    }
-    .btn-yes:hover { 
-      animation-play-state: paused;
-      transform: scale(1.04) translateZ(0); 
-      filter: brightness(1.06); 
-      box-shadow: 0 8px 20px -4px rgba(0,0,0,0.4), 0 15px 30px rgba(209,90,143,0.4);
-    }
-    .links-row a:hover{ color: var(--ink); transform: translateY(-1px); }
+  .link-card:active { transform: scale(0.97); }
+
+  .link-media-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
   }
 
-  .links-row{
+  .link-media-wrapper img, .link-media-wrapper video {
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .link-card:hover .link-media-wrapper img,
+  .link-card:hover .link-media-wrapper video {
+    transform: scale(1.05);
+  }
+
+  .link-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
+    z-index: 1;
+  }
+
+  .link-icon {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 30px;
-    width: 100%;
+    z-index: 2;
   }
 
-  .links-group { display: flex; align-items: center; gap: 12px; }
-
-  .links-row a{
-    font-size: 13px;
-    color: var(--ink-soft);
-    text-decoration: none;
-    font-weight: 500;
-    transition: var(--transition);
-    display: inline-block;
+  /* Цей фільтр робить іконки (OnlyFans і Telegram) чисто білими */
+  .link-icon img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    filter: brightness(0) invert(1); 
   }
 
-  .links-row .dot{
-    width: 3px; height: 3px;
-    border-radius: 50%;
-    background: var(--card-border);
-    flex-shrink: 0;
+  .link-text-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    z-index: 2;
   }
 
-  footer{
-    margin-top: 24px;
+  .link-text {
+    color: var(--text-main);
+    font-size: 24px;
+    font-weight: 600;
     text-align: center;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.8);
+    letter-spacing: -0.01em;
+  }
+
+  /* ========================================= */
+  /* ФУТЕР (ВОТЕРМАРКА) */
+  /* ========================================= */
+  .footer {
+    margin-top: auto;
+    padding-top: 30px;
     font-size: 11px;
-    color: var(--ink-soft);
-    opacity: 0.5;
+    color: rgba(255, 255, 255, 0.3);
+    text-align: center;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 
   /* ========================================================= */
-  /* СТИЛІ ДЛЯ МОДАЛЬНИХ ВІКОН (Вік та In-App Browser) */
+  /* ВІКНА (ВІК ТА АНТИ-БРАУЗЕР) */
   /* ========================================================= */
   .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(18, 11, 18, 0.75);
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* Нейтральне, не рожеве затемнення (виправлено) */
+    background: rgba(10, 10, 10, 0.65);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     display: flex;
@@ -394,35 +447,39 @@
     padding: 20px;
   }
 
-  .modal-overlay.solid-bg {
-    background: var(--bg);
-    z-index: 100000;
+  .modal-overlay.solid-bg { background: var(--bg-dark); z-index: 100000; }
+  .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+  .modal-box {
+    /* Білувате стильне матове скло (виправлено) */
+    background: rgba(255, 255, 255, 0.08); 
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    padding: 32px 24px;
+    max-width: 320px;
+    width: 100%;
+    transform: translateY(15px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
   }
 
-  .modal-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
+  .modal-overlay.active .modal-box {
+    transform: translateY(0) scale(1);
   }
 
   .modal-title {
-    color: var(--accent);
+    color: var(--text-main);
     font-size: 26px;
     font-weight: 800;
     margin-bottom: 8px;
     letter-spacing: -0.01em;
-    transform: translateY(15px);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
   }
 
   .modal-subtitle {
-    color: var(--ink-soft);
+    color: var(--text-muted);
     font-size: 14px;
     line-height: 1.5;
     margin-bottom: 30px;
-    max-width: 300px;
-    transform: translateY(15px);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
   .modal-buttons {
@@ -430,15 +487,6 @@
     flex-direction: row;
     gap: 16px;
     width: 100%;
-    max-width: 280px;
-    transform: translateY(15px);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-
-  .modal-overlay.active .modal-title,
-  .modal-overlay.active .modal-subtitle,
-  .modal-overlay.active .modal-buttons {
-    transform: translateY(0);
   }
 
   .modal-btn {
@@ -453,36 +501,16 @@
     font-family: 'Inter', sans-serif;
   }
 
-  .btn-yes {
-    background: linear-gradient(180deg, #FF8FC0, #D15A8F);
-    color: #FFFFFF;
-    animation: btn-pulse-soft 2s infinite ease-in-out;
-  }
-
-  .btn-no {
-    background: rgba(255,255,255,0.05);
-    color: #FFFFFF;
-    border: 1px solid rgba(255,255,255,0.2);
-  }
-
-  .btn-yes:active { 
-    animation-play-state: paused;
-    transform: scale(0.95); 
-    filter: brightness(0.95);
-  }
-  
-  .btn-no:active { 
-    transform: scale(0.95); 
-    background: rgba(255,255,255,0.1); 
-  }
+  .btn-yes { background: #EBEBEB; color: #111; }
+  .btn-no { background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid rgba(255,255,255,0.1); }
+  .btn-yes:active { transform: scale(0.95); filter: brightness(0.95); }
+  .btn-no:active { transform: scale(0.95); background: rgba(255,255,255,0.1); }
 
   .in-app-arrow {
     position: absolute;
-    top: 40px;
-    right: 24px;
-    width: 44px;
-    height: 44px;
-    color: var(--rose);
+    top: 40px; right: 24px;
+    width: 44px; height: 44px;
+    color: var(--text-main);
     animation: arrow-bounce 1s infinite alternate ease-in-out;
   }
 
@@ -491,91 +519,100 @@
     100% { transform: translate(12px, -12px); }
   }
 
-  @media (prefers-reduced-motion: reduce){
-    .page, .cta-button, .links-row a, .badge, .online-indicator, .modal-overlay, .modal-title, .modal-subtitle, .modal-buttons, .btn-yes, .in-app-arrow {
-      animation: none !important;
-      transition: none !important;
-      transform: none !important;
-    }
-    .avatar-outer::before{ animation: none; }
-  }
-
   @media (max-width: 380px){
     body{ padding: 20px 14px; }
-    .card{ padding: 30px 20px 24px; border-radius: 24px; }
-    .cta-button{ padding: 15px; font-size: 14px; }
-    .badge { top: -10px; right: 12px; font-size: 9px; padding: 4px 8px; }
-    .modal-title { font-size: 22px; }
-    .modal-subtitle { font-size: 13px; }
-    .modal-btn { font-size: 14px; padding: 14px 10px; }
+    .card{ padding: 34px 20px 28px; border-radius: 24px; }
+    .link-card { height: 210px; }
   }
 </style>
 </head>
 
 <body oncontextmenu="return false;">
 
-<div class="page">
+<!-- ========================================= -->
+<!-- ПРЕЛОАДЕР (ЕКРАН ЗАВАНТАЖЕННЯ)            -->
+<!-- ========================================= -->
+<div id="preloader" class="preloader">
+  <div class="preloader-name" id="pl-name"></div>
+  <div class="preloader-text">LOADING...</div>
+</div>
+
+<!-- ========================================= -->
+<!-- ОСНОВНИЙ КОНТЕНТ                          -->
+<!-- ========================================= -->
+<div class="global-blur-bg" id="global-bg-container"></div>
+<div class="global-tint"></div>
+
+<div class="page" id="main-page">
   <div class="card">
-    <div class="avatar-outer">
-      <div class="avatar-wrap">
-        <!-- Аватарка -->
-        <img id="ui-avatar" src="" alt="Avatar" loading="lazy" draggable="false">
-        <div class="avatar-placeholder">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.4"/>
-            <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7" stroke="currentColor" stroke-width="1.4"/>
+    <div class="card-bg-layer" id="card-bg-container">
+      <div class="card-bg-overlay"></div>
+    </div>
+
+    <div class="card-content">
+      <div class="header-section">
+        <div class="title-row">
+          <h1 class="title-text" id="ui-name"></h1>
+          <svg class="verified-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill="#1D9BF0"/>
           </svg>
         </div>
+        <p class="subtitle-text" id="ui-tagline"></p>
       </div>
-      <!-- Позначка ОНЛАЙН -->
-      <div class="online-indicator" id="ui-online"></div>
-    </div>
 
-    <!-- Тексти -->
-    <div class="name" id="ui-name"></div>
-    <div class="tagline" id="ui-tagline"></div>
-
-    <div class="cta-group">
-      <!-- OnlyFans Button (Відкриває блюр перевірку, переадресація в тому ж вікні) -->
-      <a id="ui-of-btn" class="cta-button cta-rose" href="#" draggable="false">
-        <div class="badge">Free Trial</div>
-        <img src="onlyfans_icon.png" alt="OnlyFans" draggable="false">
-        More Of Me
-      </a>
-
-      <!-- Telegram Button -->
-      <a id="ui-tg-btn" class="cta-button cta-light" href="#" target="_blank" rel="noopener noreferrer" draggable="false">
-        <img src="telegram_icon.png" alt="Telegram" draggable="false">
-        My Telegram Channel
-      </a>
-    </div>
-
-    <div class="links-row">
-      <div class="links-group">
-        <a id="ui-ig-btn" href="#" target="_blank" rel="noopener noreferrer" draggable="false">Instagram</a>
-        <div class="dot"></div>
-        <a id="ui-th-btn" href="#" target="_blank" rel="noopener noreferrer" draggable="false">Threads</a>
+      <div class="social-section">
+        <a id="ui-ig-btn" href="#" target="_blank" class="social-btn" draggable="false">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.37.89.41.41.67.81.89 1.37.16.43.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.89 1.37-.41.41-.81.67-1.37.89-.43.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.37-.89-.41-.41-.67-.81-.89-1.37-.16-.43-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.89-1.37.41-.41.81-.67 1.37-.89.43-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.77.13 4.9.33 4.14.62c-.78.3-1.45.71-2.12 1.38-.67.67-1.08 1.34-1.38 2.12C.33 4.9.13 5.77.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.28.26 2.15.55 2.91.3.78.71 1.45 1.38 2.12.67.67 1.34 1.08 2.12 1.38.76.29 1.63.49 2.91.55 1.28.06 1.69.07 4.95.07s3.67-.01 4.95-.07c1.28-.06 2.15-.26 2.91-.55.78-.3 1.45-.71 2.12-1.38.67-.67 1.08-1.34 1.38-2.12.29-.76.49-1.63.55-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.28-.26-2.15-.55-2.91-.3-.78-.71-1.45-1.38-2.12-.67-.67-1.34-1.08-2.12-1.38-.76-.29-1.63-.49-2.91-.55C15.67.01 15.26 0 12 0zm0 5.83A6.17 6.17 0 1018.17 12 6.17 6.17 0 0012 5.83zm0 10.17A4 4 0 1116 12a4 4 0 01-4 4zm6.4-11.45a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/>
+          </svg>
+        </a>
       </div>
+
+      <div class="links-section">
+        <!-- 1. OnlyFans Button -->
+        <a id="ui-of-btn" class="link-card" href="#" draggable="false">
+          <div class="link-media-wrapper" id="ui-of-btn-media"></div>
+          <div class="link-overlay"></div>
+          <div class="link-icon">
+            <img src="onlyfans.svg" alt="OnlyFans">
+          </div>
+          <div class="link-text-wrapper"><span class="link-text" id="ui-of-text"></span></div>
+        </a>
+
+        <!-- 2. Telegram Button -->
+        <a id="ui-tg-btn" class="link-card" href="#" target="_blank" rel="noopener noreferrer" draggable="false">
+          <div class="link-media-wrapper"><img id="ui-tg-bg" class="media-fill" src="" alt="TG Bg"></div>
+          <div class="link-overlay"></div>
+          <div class="link-icon">
+            <img src="telegram.svg" alt="Telegram">
+          </div>
+          <div class="link-text-wrapper"><span class="link-text" id="ui-tg-text"></span></div>
+        </a>
+      </div>
+
+      <!-- ФУТЕР (ВОТЕРМАРКА) -->
+      <div class="footer" id="ui-footer-name"></div>
+      
     </div>
   </div>
-
-  <footer>© 2026 <span id="ui-footer-name"></span></footer>
 </div>
 
 <!-- ===================================================================== -->
 <!-- ВІКНО ВІКОВОЇ ПЕРЕВІРКИ -->
 <!-- ===================================================================== -->
 <div id="age-modal" class="modal-overlay">
-  <h2 class="modal-title">Are you 18 or older?</h2>
-  <p class="modal-subtitle">This website contains age-restricted content.</p>
-  <div class="modal-buttons">
-    <button id="btn-yes" class="modal-btn btn-yes">YES</button>
-    <button id="btn-no" class="modal-btn btn-no">NO</button>
+  <div class="modal-box">
+    <h2 class="modal-title">Are you 18 or older?</h2>
+    <p class="modal-subtitle">This website contains age-restricted content.</p>
+    <div class="modal-buttons">
+      <button id="btn-yes" class="modal-btn btn-yes">YES</button>
+      <button id="btn-no" class="modal-btn btn-no">NO</button>
+    </div>
   </div>
 </div>
 
 <!-- ===================================================================== -->
-<!-- IN-APP BROWSER OVERLAY (Екран перехоплення) -->
+<!-- IN-APP BROWSER OVERLAY -->
 <!-- ===================================================================== -->
 <div id="in-app-overlay" class="modal-overlay solid-bg">
   <svg class="in-app-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -583,14 +620,16 @@
     <polyline points="7 7 17 7 17 17"></polyline>
   </svg>
   
-  <h2 class="modal-title" style="font-size: 24px;">Open in Browser</h2>
-  <p class="modal-subtitle">
-    To view this content properly and access all features, please open this page in your system browser (Safari/Chrome).<br><br>
-    Tap the <strong>menu (...)</strong> or Safari icon and select <strong>"Open in browser"</strong>.
-  </p>
-  
-  <div class="modal-buttons" style="max-width: 250px;">
-    <button id="copy-link-btn" class="modal-btn btn-no" style="width: 100%;">🔗 Copy Website Link</button>
+  <div class="modal-box" style="background: transparent; border: none; box-shadow: none; padding-top: 80px;">
+    <h2 class="modal-title" style="font-size: 24px;">Open in Browser</h2>
+    <p class="modal-subtitle">
+      To view this content properly and access all features, please open this page in your system browser (Safari/Chrome).<br><br>
+      Tap the <strong>menu (...)</strong> or Safari icon and select <strong>"Open in browser"</strong>.
+    </p>
+    
+    <div class="modal-buttons" style="align-items: center;">
+      <button id="copy-link-btn" class="modal-btn btn-yes" style="width: 100%; max-width: 250px;">🔗 Copy Website Link</button>
+    </div>
   </div>
 </div>
 
@@ -598,120 +637,148 @@
 <!-- СИСТЕМНІ СКРИПТИ -->
 <!-- ===================================================================== -->
 <script>
-  // Застосовуємо налаштування з конфігу
   document.getElementById('ui-name').innerText = CONFIG.nickname;
-  document.getElementById('ui-footer-name').innerText = CONFIG.nickname;
+  document.getElementById('pl-name').innerText = CONFIG.nickname; 
   document.getElementById('ui-tagline').innerText = CONFIG.tagline;
-  
+  document.getElementById('ui-of-text').innerText = CONFIG.btnOnlyFansText;
+  document.getElementById('ui-tg-text').innerText = CONFIG.btnTelegramText;
+  document.getElementById('ui-footer-name').innerText = "© " + CONFIG.nickname; 
+
   document.getElementById('ui-of-btn').href = CONFIG.onlyfansLink;
   document.getElementById('ui-tg-btn').href = CONFIG.telegramLink;
   document.getElementById('ui-ig-btn').href = CONFIG.instagramLink;
-  document.getElementById('ui-th-btn').href = CONFIG.threadsLink;
-
-  if (CONFIG.isOnline) {
-    document.getElementById('ui-online').style.display = 'block';
-  }
-
-  // ОБРОБКА АВАТАРКИ (gif, jpg, png)
-  const avatarEl = document.getElementById('ui-avatar');
-  const exts = ['.jpg', '.jpeg', '.png', '.gif'];
-  let extIndex = 0;
-  const baseName = CONFIG.avatarFile.substring(0, CONFIG.avatarFile.lastIndexOf('.')) || CONFIG.avatarFile;
-
-  avatarEl.src = CONFIG.avatarFile;
-  avatarEl.onerror = function() {
-    if (extIndex < exts.length) {
-      this.src = baseName + exts[extIndex];
-      extIndex++;
-    } else {
-      this.onerror = null;
-      this.style.display = 'none';
-      this.nextElementSibling.style.display = 'flex';
-    }
-  };
 
   // -----------------------------------------------------------
-  // 1. ПЕРЕВІРКА НА ВБУДОВАНИЙ БРАУЗЕР (Instagram / Telegram тощо)
+  // ЛОГІКА ПРЕЛОАДЕРА
+  // -----------------------------------------------------------
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      document.getElementById('preloader').classList.add('hidden');
+      document.getElementById('main-page').classList.add('loaded');
+    }, 1200); 
+  });
+
+  // -----------------------------------------------------------
+  // ОБРОБКА ГІФКИ / ВІДЕО
+  // -----------------------------------------------------------
+  const bgMediaFile = CONFIG.mainBackgroundMedia;
+  const isBgVideo = bgMediaFile.match(/\.(mp4|webm)$/i);
+  
+  const cardBgContainer = document.getElementById('card-bg-container');
+  const globalBgContainer = document.getElementById('global-bg-container');
+
+  function createMediaElement(src, isVid, extraClass = '') {
+    if (isVid) {
+      const vid = document.createElement('video');
+      vid.src = src; vid.className = 'media-fill ' + extraClass; vid.autoplay = true; vid.loop = true; vid.muted = true; vid.playsInline = true;
+      return vid;
+    } else {
+      const img = document.createElement('img');
+      img.src = src; img.className = 'media-fill ' + extraClass; img.alt = "Background";
+      return img;
+    }
+  }
+
+  const cardMedia = createMediaElement(bgMediaFile, isBgVideo);
+  cardBgContainer.insertBefore(cardMedia, cardBgContainer.firstChild);
+
+  const globalMedia = createMediaElement(bgMediaFile, isBgVideo, 'global-media');
+  globalBgContainer.appendChild(globalMedia);
+
+  if (!isBgVideo) {
+    const exts = ['.jpg', '.jpeg', '.png', '.gif'];
+    let extIndex = 0;
+    const baseName = bgMediaFile.substring(0, bgMediaFile.lastIndexOf('.')) || bgMediaFile;
+    
+    cardMedia.onerror = function() {
+      if (extIndex < exts.length) {
+        const newSrc = baseName + exts[extIndex];
+        cardMedia.src = newSrc;
+        globalMedia.src = newSrc;
+        extIndex++;
+      } else {
+        cardMedia.onerror = null;
+        cardMedia.style.display = 'none';
+        globalMedia.style.display = 'none';
+      }
+    };
+  }
+
+  const btnMediaFile = CONFIG.btnOnlyFansBg;
+  const isBtnVideo = btnMediaFile.match(/\.(mp4|webm)$/i);
+  const ofBtnMediaContainer = document.getElementById('ui-of-btn-media');
+
+  const btnMedia = createMediaElement(btnMediaFile, isBtnVideo);
+  ofBtnMediaContainer.appendChild(btnMedia);
+
+  if (!isBtnVideo) {
+    const extsBtn = ['.jpg', '.jpeg', '.png', '.gif'];
+    let extBtnIndex = 0;
+    const baseBtnName = btnMediaFile.substring(0, btnMediaFile.lastIndexOf('.')) || btnMediaFile;
+    
+    btnMedia.onerror = function() {
+      if (extBtnIndex < extsBtn.length) {
+        btnMedia.src = baseBtnName + extsBtn[extBtnIndex];
+        extBtnIndex++;
+      } else {
+        btnMedia.onerror = null;
+        btnMedia.style.display = 'none'; 
+      }
+    };
+  }
+
+  const tgBgEl = document.getElementById('ui-tg-bg');
+  tgBgEl.src = CONFIG.btnTelegramBg;
+  tgBgEl.onerror = function() { this.style.display = 'none'; };
+
+  // -----------------------------------------------------------
+  // ПЕРЕВІРКА НА ВБУДОВАНИЙ БРАУЗЕР
   // -----------------------------------------------------------
   const ua = navigator.userAgent || navigator.vendor || window.opera;
   const isAndroid = /android/i.test(ua);
-  
-  const isInApp = (
-    ua.indexOf('Instagram') > -1 || 
-    ua.indexOf('Barcelona') > -1 || 
-    ua.indexOf('Threads') > -1 || 
-    ua.indexOf('FBAN') > -1 || 
-    ua.indexOf('FBAV') > -1 || 
-    ua.indexOf('TikTok') > -1 || 
-    ua.indexOf('Telegram') > -1
-  );
+  const isInApp = (ua.indexOf('Instagram') > -1 || ua.indexOf('Barcelona') > -1 || ua.indexOf('Threads') > -1 || ua.indexOf('FBAN') > -1 || ua.indexOf('FBAV') > -1 || ua.indexOf('TikTok') > -1 || ua.indexOf('Telegram') > -1);
   
   if (isInApp) {
     if (isAndroid) {
-      // Спроба автоматично відкрити Chrome на Android
-      const currentUrl = window.location.href.replace(/^https?:\/\//, '');
-      const intentUrl = `intent://${currentUrl}#Intent;scheme=https;package=com.android.chrome;end;`;
+      const intentUrl = `intent://${window.location.href.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end;`;
       window.location.href = intentUrl;
-      
-      // Якщо авто-перехід не спрацював за 1 секунду — показуємо підказку
-      setTimeout(() => {
-        document.getElementById('in-app-overlay').classList.add('active');
-      }, 1000);
+      setTimeout(() => { document.getElementById('in-app-overlay').classList.add('active'); }, 1000);
     } else {
-      // Для iOS (iPhone) — відразу показуємо екран із проханням відкрити в Safari
       document.getElementById('in-app-overlay').classList.add('active');
     }
   }
 
-  // Кнопка "Скопіювати лінк" на екрані перехоплення
   document.getElementById('copy-link-btn').addEventListener('click', function() {
     const btn = this;
     navigator.clipboard.writeText(window.location.href).then(() => {
       btn.innerText = '✅ Link Copied!';
-      btn.style.background = 'rgba(36, 211, 102, 0.2)'; 
-      btn.style.color = '#24d366';
+      btn.style.background = '#24d366'; 
+      btn.style.color = '#fff';
       setTimeout(() => { 
         btn.innerText = '🔗 Copy Website Link'; 
-        btn.style.background = 'rgba(255,255,255,0.05)';
-        btn.style.color = '#FFFFFF';
+        btn.style.background = '#EBEBEB';
+        btn.style.color = '#111';
       }, 2500);
     });
   });
 
   // -----------------------------------------------------------
-  // 2. ЛОГІКА ВІКОВОЇ ПЕРЕВІРКИ
+  // ЛОГІКА ВІКОВОЇ ПЕРЕВІРКИ
   // -----------------------------------------------------------
   const ofBtn = document.getElementById('ui-of-btn');
   const ageModal = document.getElementById('age-modal');
   const btnYes = document.getElementById('btn-yes');
   const btnNo = document.getElementById('btn-no');
 
-  ofBtn.addEventListener('click', function(e) {
-    e.preventDefault(); 
-    ageModal.classList.add('active');
-  });
-
-  // Натискання "YES" (АВТО-ПЕРЕАДРЕСАЦІЯ В ЦІЙ ЖЕ ВКЛАДЦІ)
-  btnYes.addEventListener('click', function() {
-    ageModal.classList.remove('active');
-    window.location.href = CONFIG.onlyfansLink;
-  });
-
-  btnNo.addEventListener('click', function() {
-    ageModal.classList.remove('active');
-  });
+  ofBtn.addEventListener('click', function(e) { e.preventDefault(); ageModal.classList.add('active'); });
+  btnYes.addEventListener('click', function() { ageModal.classList.remove('active'); window.location.href = CONFIG.onlyfansLink; });
+  btnNo.addEventListener('click', function() { ageModal.classList.remove('active'); });
 
   // Захист контенту
-  document.addEventListener('contextmenu', event => event.preventDefault()); 
-  document.addEventListener('dragstart', event => event.preventDefault());   
+  document.addEventListener('contextmenu', e => e.preventDefault()); 
+  document.addEventListener('dragstart', e => e.preventDefault());   
   document.onkeydown = function(e) {
-    if (e.keyCode == 123) return false; 
-    if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; 
-    if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; 
-    if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; 
-    if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; 
-    if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) return false; 
-    if (e.ctrlKey && e.keyCode == 'C'.charCodeAt(0)) return false; 
+    if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 67 || e.keyCode == 74)) || (e.ctrlKey && (e.keyCode == 85 || e.keyCode == 83 || e.keyCode == 67))) return false; 
   };
 </script>
 </body>
