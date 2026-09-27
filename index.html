@@ -26,7 +26,7 @@
     // 3. ПЕРША КНОПКА (ONLYFANS) - ГІФКА/ФОТО ДЛЯ САМОЇ КНОПКИ
     onlyfansLink: "https://www.stacked.com/l/7b49auwp", 
     btnOnlyFansText: "More of me", 
-    btnOnlyFansBg: "of_bg.jpg", // Виправив назву файлу на правильну
+    btnOnlyFansBg: "of_bg.jpg", 
 
     // 4. ДРУГА КНОПКА (TELEGRAM)
     telegramLink: "https://t.me/+4uCv9ky1A5I1M2Qy",             
@@ -245,10 +245,10 @@
   }
 
   .title-row {
-    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 6px; /* Відступ між іменем і галочкою */
     margin-bottom: 8px;
   }
 
@@ -264,11 +264,9 @@
   }
 
   .verified-icon {
-    position: absolute;
-    left: 100%; 
-    margin-left: 8px;
     width: 24px;
     height: 24px;
+    flex-shrink: 0;
     fill: #1D9BF0; 
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
   }
@@ -431,7 +429,7 @@
   .modal-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    /* Нейтральне, не рожеве затемнення (виправлено) */
+    /* Нейтральне, не рожеве затемнення */
     background: rgba(10, 10, 10, 0.65);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -451,7 +449,7 @@
   .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
   .modal-box {
-    /* Білувате стильне матове скло (виправлено) */
+    /* Білувате стильне матове скло */
     background: rgba(255, 255, 255, 0.08); 
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 24px;
